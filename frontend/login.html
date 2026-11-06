@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="th">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <title>เข้าสู่ระบบ | What to Eat</title>
+  <link href="css/style.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <div class="topbar">
+   GOOD FOOD. GOOD MOOD. GOOD STORIES. ✳
+  </div>
+  <header class="container nav">
+   <a class="logo" href="index.html">
+    WHAT <span>TO EAT</span> ✳
+   </a>
+   <nav class="navlinks">
+    <a href="index.html">หน้าแรก</a>
+    <a href="explore.html">สำรวจรีวิว</a>
+    <a href="categories.html">หมวดหมู่</a>
+    <a href="trending.html">ยอดนิยม</a>
+    <a href="write-review.html">เขียนรีวิว</a>
+   </nav>
+   <div class="nav-actions" id="nav-actions">
+    <a class="btn btn-outline" href="login.html">เข้าสู่ระบบ</a>
+    <a class="btn btn-red" href="register.html">สมัครสมาชิก</a>
+   </div>
+  </header>
+  <main class="container">
+   <div class="auth-shell">
+    <div class="auth-art">
+     <img alt="Delicious meal" src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=1000"/>
+     <div>Come hungry.<br/>Leave happy.</div>
+    </div>
+    <form class="form-wrap" id="login-form">
+     <div class="eyebrow">WELCOME BACK, FOODIE</div>
+     <h1>กลับมาหิว<br/>ด้วยกันอีกนะ</h1>
+     <p class="form-note">เข้าสู่ What to Eat แล้วไปหาเมนูโปรดกัน</p>
+     
+     <div class="form-row">
+      <label>อีเมล</label>
+      <input class="field" id="email" name="email" placeholder="you@example.com" required type="email"/>
+     </div>
+     <div class="form-row">
+      <label>รหัสผ่าน</label>
+      <input class="field" id="password" name="password" placeholder="อย่างน้อย 4 ตัวอักษร" required type="password"/>
+     </div>
+     <button class="btn btn-red" type="submit">
+      เข้าสู่ระบบ &nearrow;
+     </button>
+     <p class="form-note" style="text-align:center;margin-top:18px">
+      ยังไม่มีบัญชี?
+      <a href="register.html" style="color:var(--tomato);font-weight:800">สมัครสมาชิกเลย</a>
+     </p>
+    </form>
+   </div>
+  </main>
+  <footer class="footer">
+   <div class="container footer-inner">
+    <div>
+     <a class="logo" href="index.html">WHAT <span>TO EAT</span> ✳</a>
+     <p>พื้นที่เล็ก ๆ สำหรับคนรักอาหารและเรื่องเล่าจานโปรด</p>
+    </div>
+    <div>
+     <b>กินให้อร่อย แล้วเล่าให้ฟัง ♡</b>
+     <p>&copy; 2026 What to Eat &middot; Food Review Community</p>
+    </div>
+   </div>
+  </footer>
+  <div class="toast" id="toast"></div>
+  
+  <!-- โหลดไลบรารีภายนอก -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/zod@3.22.4/lib/index.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <!-- โหลดไฟล์สคริปต์หลัก (ปรับ path ให้ตรงกับรากโฟลเดอร์ frontend) -->
+<script src="js/app.js"></script>
+<script src="js/pages.js"></script>
+ </body>
+</html>

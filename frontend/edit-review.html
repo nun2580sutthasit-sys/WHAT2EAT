@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="th">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <title>แก้ไขรีวิว | 
+   เขียนรีวิว | What to Eat
+  </title>
+  <link href="css/style.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <div class="topbar">
+   GOOD FOOD. GOOD MOOD. GOOD STORIES. ✳
+  </div>
+  <header class="container nav">
+   <a class="logo" href="index.html">
+    WHAT
+    <span>
+     TO EAT
+    </span>
+    ✳
+   </a>
+   <nav class="navlinks">
+    <a href="index.html">
+     หน้าแรก
+    </a>
+    <a href="explore.html">
+     สำรวจรีวิว
+    </a>
+    <a href="categories.html">
+     หมวดหมู่
+    </a>
+    <a href="trending.html">
+     ยอดนิยม
+    </a>
+    <a href="write-review.html">
+     เขียนรีวิว
+    </a>
+   </nav>
+   <div class="nav-actions" id="nav-actions">
+    <a class="btn btn-outline" href="login.html">
+     เข้าสู่ระบบ
+    </a>
+    <a class="btn btn-red" href="register.html">
+     สมัครสมาชิก
+    </a>
+   </div>
+  </header>
+  <main class="container">
+   <section class="page-intro">
+    <div class="eyebrow">
+     SHARE YOUR FOOD STORY
+    </div>
+    <h1>
+     จานนี้มีเรื่องเล่า ✍️
+    </h1>
+    <p class="form-note">
+     รีวิวจากประสบการณ์จริงของคุณ อาจเป็นพิกัดร้านโปรดของใครอีกหลายคน
+    </p>
+   </section>
+   <form class="form-wrap" enctype="multipart/form-data" id="review-form" style="max-width:760px;margin-top:15px">
+    <div class="form-row">
+     <label>
+      หัวข้อรีวิว *
+     </label>
+     <input class="field" name="title" placeholder="เช่น ข้าวซอยที่อร่อยที่สุดในเชียงใหม่" required=""/>
+    </div>
+    <div class="form-row">
+     <label>
+      ชื่อร้านอาหาร *
+     </label>
+     <input class="field" name="restaurant" placeholder="ชื่อร้าน" required=""/>
+    </div>
+    <div class="form-row">
+     <label>
+      พิกัด / ย่าน
+     </label>
+     <input class="field" name="location" placeholder="เช่น อารีย์ กรุงเทพฯ"/>
+    </div>
+    <div class="form-row">
+     <label>
+      หมวดหมู่
+     </label>
+     <select class="field" name="category">
+      <option>
+       จานโปรด
+      </option>
+      <option>
+       คาเฟ่
+      </option>
+      <option>
+       ของหวาน
+      </option>
+      <option>
+       อาหารไทย
+      </option>
+      <option>
+       อาหารญี่ปุ่น
+      </option>
+      <option>
+       อาหารเกาหลี
+      </option>
+      <option>
+       พาสต้า
+      </option>
+      <option>
+       เครื่องดื่ม
+      </option>
+      <option>
+       อื่น ๆ
+      </option>
+     </select>
+    </div>
+    <div class="form-row">
+     <label>
+      ให้คะแนนความอร่อย *
+     </label>
+     <div class="stars-input" id="star-picker">
+     </div>
+     <p class="form-note">
+      แตะดาวเพื่อเลือกคะแนน 1&ndash;5 ดาว
+     </p>
+    </div>
+    <div class="form-row">
+     <label>
+      เล่าความประทับใจ *
+     </label>
+     <textarea class="field" name="body" placeholder="รสชาติ บรรยากาศ ราคา เมนูที่แนะนำ..." required="" rows="5"></textarea>
+    </div>
+    <div class="form-row">
+     <label>
+      รูปอาหารของคุณ (JPG / PNG / WEBP ไม่เกิน 5MB)
+     </label>
+     <input accept="image/png,image/jpeg,image/webp" class="field" name="photo" type="file"/>
+    </div>
+    <button class="btn btn-red">
+     เผยแพร่รีวิว &nearrow;
+    </button>
+    <p class="form-note">
+     ต้องเข้าสู่ระบบก่อนส่งรีวิว ระบบจะบันทึกชื่อผู้รีวิวและเวลาให้อัตโนมัติ
+    </p>
+   </form>
+  </main>
+  <footer class="footer">
+   <div class="container footer-inner">
+    <div>
+     <a class="logo" href="index.html">
+      WHAT
+      <span>
+       TO EAT
+      </span>
+      ✳
+     </a>
+     <p>
+      พื้นที่เล็ก ๆ สำหรับคนรักอาหารและเรื่องเล่าจานโปรด
+     </p>
+    </div>
+    <div>
+     <b>
+      กินให้อร่อย แล้วเล่าให้ฟัง ♡
+     </b>
+     <p>
+      &copy; 2026 What to Eat &middot; Food Review Community
+     </p>
+    </div>
+   </div>
+  </footer>
+  <div class="toast" id="toast">
+  </div>
+  <script src="js/app.js">
+  </script>
+  <script src="js/pages.js">
+  </script>
+ </body>
+</html>
+

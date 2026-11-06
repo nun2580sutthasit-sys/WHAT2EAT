@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <title>เขียนรีวิว | What to Eat</title>
+  <link href="css/style.css" rel="stylesheet"/>
+  
+  <!-- Leaflet CSS สำหรับแสดงแผนที่ -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+    .form-container {
+      max-width: 650px;
+      margin: 40px auto;
+      padding: 32px;
+      background: #fff;
+      border: 3px solid #111;
+      border-radius: 16px;
+      box-shadow: 6px 6px 0px #111;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 800;
+      color: #111;
+      font-size: 15px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #111;
+      border-radius: 8px;
+      font-size: 16px;
+      background: #fff;
+      box-sizing: border-box;
+      transition: all 0.2s;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #ff472e;
+      box-shadow: 2px 2px 0px #111;
+    }
+
+    textarea.form-control {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    #map-container {
+      margin-top: 10px;
+      border: 2px solid #111;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 3px 3px 0px #111;
+    }
+
+    #map {
+      height: 280px;
+      width: 100%;
+      z-index: 1;
+    }
+
+    .map-hint {
+      font-size: 13px;
+      color: #6b7280;
+      margin-top: 6px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">GOOD FOOD. GOOD MOOD. GOOD STORIES. ✳</div>
+  
+  <header class="container nav">
+    <a class="logo" href="index.html">WHAT <span>TO EAT</span> ✳</a>
+    <nav class="navlinks">
+      <a href="index.html">หน้าแรก</a>
+      <a href="explore.html">สำรวจรีวิว</a>
+      <a href="categories.html">หมวดหมู่</a>
+      <a href="trending.html">ยอดนิยม</a>
+      <a href="write-review.html" style="color: #ef4444; font-weight: bold;">เขียนรีวิว</a>
+    </nav>
+    <div class="nav-actions" id="nav-actions"></div>
+  </header>
+
+  <main class="container">
+    <div class="form-container">
+      <h1 style="margin-bottom: 24px; font-size: 30px; font-weight: 800; color: #111;">เขียนรีวิวใหม่ ✍️</h1>
+      
+      <form id="review-form">
+        <div class="form-group">
+          <label for="title">หัวข้อรีวิว (เมนูเด็ด / ความประทับใจ)</label>
+          <input type="text" id="title" name="title" class="form-control" required placeholder="เช่น ผัดไทยกุ้งสด อร่อยแสงออกปาก!">
+        </div>
+
+        <div class="form-group">
+          <label for="restaurant">ชื่อร้านอาหาร / สถานที่</label>
+          <input type="text" id="restaurant" name="restaurant" class="form-control" required placeholder="เช่น ร้านผัดไทยเจ๊ปุ๊ก">
+        </div>
+
+        <div class="form-group">
+          <label for="location">📍 พิกัด / ปักหมุดตำแหน่งร้าน</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="location" name="location" class="form-control" placeholder="พิมพ์ชื่อร้าน/สถานที่ แล้วกดค้นหา หรือคลิกบนแผนที่">
+            <button type="button" id="btn-search-location" class="btn btn-outline" style="white-space: nowrap; font-weight: 700; cursor: pointer; border: 2px solid #111; background: #fff;">
+              🔍 ค้นหา
+            </button>
+            <button type="button" id="btn-get-location" class="btn btn-outline" style="white-space: nowrap; font-weight: 700; cursor: pointer; border: 2px solid #111; background: #fff;">
+              📌 GPS
+            </button>
+          </div>
+          
+          <div id="map-container">
+            <div id="map"></div>
+          </div>
+          <div class="map-hint">💡 พิมพ์ชื่อร้านแล้วกด "🔍 ค้นหา" หรือคลิกปักหมุดบนแผนที่ได้เลย</div>
+        </div>
+
+        <div class="form-group" style="display: flex; gap: 16px; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 200px;">
+            <label for="category">หมวดหมู่</label>
+            <select id="category" name="category" class="form-control">
+              <option value="อาหารไทย">อาหารไทย</option>
+              <option value="คาเฟ่/ของหวาน">คาเฟ่/ของหวาน</option>
+              <option value="นานาชาติ">นานาชาติ</option>
+              <option value="สตรีทฟู้ด">สตรีทฟู้ด</option>
+            </select>
+          </div>
+          <div style="flex: 1; min-width: 200px;">
+            <label for="rating">คะแนนความอร่อย</label>
+            <select id="rating" name="rating" class="form-control">
+              <option value="5">⭐⭐⭐⭐⭐ (5/5)</option>
+              <option value="4">⭐⭐⭐⭐ (4/5)</option>
+              <option value="3">⭐⭐⭐ (3/5)</option>
+              <option value="2">⭐⭐ (2/5)</option>
+              <option value="1">⭐ (1/5)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="image">อัปโหลดรูปภาพอาหาร/ร้าน</label>
+          <input type="file" id="image" name="image" class="form-control" accept="image/*">
+        </div>
+
+        <div class="form-group">
+          <label for="body">เล่าความอร่อยให้ฟังหน่อย</label>
+          <textarea id="body" name="body" class="form-control" required placeholder="รสชาติเป็นยังไง บรรยากาศร้านดีไหม..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-red" style="width: 100%; font-size: 18px; padding: 14px; font-weight: 800; border: 2px solid #111; box-shadow: 4px 4px 0px #111; cursor: pointer;">
+          🚀 เผยแพร่รีวิว
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <a class="logo" href="index.html">WHAT <span>TO EAT</span> ✳</a>
+        <p>พื้นที่เล็ก ๆ สำหรับคนรักอาหารและเรื่องเล่าจานโปรด</p>
+      </div>
+      <div>
+        <b>กินให้อร่อย แล้วเล่าให้ฟัง ♡</b>
+        <p>&copy; 2026 What to Eat &middot; Food Review Community</p>
+      </div>
+    </div>
+  </footer>
+  
+  <div class="toast" id="toast"></div>
+
+  <!-- Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.7.9/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/zod@3.22.4/lib/index.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Script สำหรับจัดการแผนที่และระบบค้นหา -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const locationInput = document.querySelector('#location');
+      const mapElement = document.querySelector('#map');
+      const searchBtn = document.querySelector('#btn-search-location');
+      const gpsBtn = document.querySelector('#btn-get-location');
+
+      if (!mapElement) return;
+
+      // 1. กำหนดตำแหน่งพิกัดเริ่มต้น (กรุงเทพมหานคร)
+      const defaultLat = 13.7563;
+      const defaultLng = 100.5018;
+      const map = L.map('map').setView([defaultLat, defaultLng], 13);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+
+      let marker;
+
+      function setMapPin(lat, lng, popupText = '') {
+        map.setView([lat, lng], 16);
+        if (marker) {
+          marker.setLatLng([lat, lng]);
+        } else {
+          marker = L.marker([lat, lng]).addTo(map);
+        }
+        if (popupText) {
+          marker.bindPopup(popupText).openPopup();
+        }
+      }
+
+      async function updateLocationName(lat, lng) {
+        try {
+          const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=th`);
+          const data = await res.json();
+          if (data && data.display_name) {
+            locationInput.value = data.display_name;
+          } else {
+            locationInput.value = `พิกัด: ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+          }
+        } catch (e) {
+          locationInput.value = `พิกัด: ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+        }
+      }
+
+      async function searchLocation() {
+        const query = locationInput ? locationInput.value.trim() : '';
+        if (!query) {
+          alert('กรุณากรอกชื่อร้าน หรือชื่อสถานที่ที่ต้องการค้นหาก่อนครับ');
+          return;
+        }
+
+        let originalBtnText = '🔍 ค้นหา';
+        if (searchBtn) {
+          originalBtnText = searchBtn.textContent;
+          searchBtn.textContent = '⏳ กำลังหา...';
+          searchBtn.disabled = true;
+        }
+
+        try {
+          let url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=th&accept-language=th&limit=1`;
+          let res = await fetch(url);
+          let data = await res.json();
+
+          if (!data || data.length === 0) {
+            url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent('ร้าน ' + query)}&countrycodes=th&accept-language=th&limit=1`;
+            res = await fetch(url);
+            data = await res.json();
+          }
+
+          if (data && data.length > 0) {
+            const lat = parseFloat(data[0].lat);
+            const lng = parseFloat(data[0].lon);
+            const displayName = data[0].display_name;
+
+            locationInput.value = displayName;
+            setMapPin(lat, lng, displayName);
+          } else {
+            alert(`ไม่พบสถานที่ "${query}" ในระบบแผนที่\n💡 แนะนำ: ระบุชื่อจังหวัด/เขต เพิ่มเติม เช่น "${query} เชียงใหม่" หรือคลิกปักหมุดบนแผนที่โดยตรง`);
+          }
+        } catch (err) {
+          console.error('Search error:', err);
+          alert('เกิดข้อผิดพลาดในการค้นหา กรุณาลองใหม่อีกครั้ง');
+        } finally {
+          if (searchBtn) {
+            searchBtn.textContent = originalBtnText;
+            searchBtn.disabled = false;
+          }
+        }
+      }
+
+      if (searchBtn) {
+        searchBtn.addEventListener('click', searchLocation);
+      }
+
+      if (locationInput) {
+        locationInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            searchLocation();
+          }
+        });
+      }
+
+      map.on('click', (e) => {
+        const { lat, lng } = e.latlng;
+        setMapPin(lat, lng);
+        updateLocationName(lat, lng);
+      });
+
+      if (gpsBtn) {
+        gpsBtn.addEventListener('click', () => {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              (position) => {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                setMapPin(lat, lng, 'ตำแหน่งปัจจุบันของคุณ');
+                updateLocationName(lat, lng);
+              },
+              () => alert('ไม่สามารถดึงตำแหน่งปัจจุบันได้ กรุณาค้นหาหรือคลิกเลือกบนแผนที่ด้วยตนเอง')
+            );
+          } else {
+            alert('เบราว์เซอร์ของคุณไม่รองรับการดึงตำแหน่ง GPS');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

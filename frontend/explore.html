@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="th">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>สำรวจรีวิว | What to Eat</title>
+  <link href="css/style.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <div class="topbar">
+   GOOD FOOD. GOOD MOOD. GOOD STORIES. ✳
+  </div>
+  <header class="container nav">
+   <a class="logo" href="index.html">
+    WHAT <span>TO EAT</span> ✳
+   </a>
+   <nav class="navlinks">
+    <a href="index.html">หน้าแรก</a>
+    <a href="explore.html" style="color: #ef4444; font-weight: bold;">สำรวจรีวิว</a>
+    <a href="categories.html">หมวดหมู่</a>
+    <a href="trending.html">ยอดนิยม</a>
+    <a href="write-review.html">เขียนรีวิว</a>
+   </nav>
+   <div class="nav-actions" id="nav-actions">
+    <!-- ปุ่มจะถูกจัดการโดย js/app.js -->
+   </div>
+  </header>
+
+  <main class="container">
+   <section class="page-intro">
+    <div class="eyebrow">WHAT TO EAT COMMUNITY</div>
+    <h1>สำรวจรีวิว</h1>
+    <p>ค้นพบร้านใหม่ เมนูโปรด และรีวิวจากคนกินจริง</p>
+   </section>
+   
+   <!-- เพิ่ม onsubmit เพื่อไม่ให้หน้าเว็บโหลดใหม่ตอนกด Enter -->
+   <form class="searchbar" id="search-form" onsubmit="event.preventDefault();">
+    <input class="field" placeholder="ค้นหาเมนู ร้านอาหาร หรือจังหวัด..." id="search-input" />
+    <button type="button" class="btn btn-red" id="search-btn">
+     ค้นหา &nearrow;
+    </button>
+   </form>
+   
+   <div class="review-grid" id="review-list">
+    <!-- การ์ดรีวิวจะมาแสดงที่นี่ -->
+   </div>
+  </main>
+
+  <footer class="footer">
+   <div class="container footer-inner">
+    <div>
+     <a class="logo" href="index.html">WHAT <span>TO EAT</span> ✳</a>
+     <p>พื้นที่เล็ก ๆ สำหรับคนรักอาหารและเรื่องเล่าจานโปรด</p>
+    </div>
+    <div>
+     <b>
+      <a href="about.html">เกี่ยวกับเรา</a>
+      <a href="contact.html">ติดต่อ</a>
+      <a href="faq.html">คำถามที่พบบ่อย</a>
+     </b>
+     <p>
+      <a href="privacy.html">ความเป็นส่วนตัว</a>
+      <a href="terms.html">ข้อกำหนด</a>
+      &middot; &copy; 2026 What to Eat
+     </p>
+    </div>
+   </div>
+  </footer>
+  
+  <div class="toast" id="toast"></div>
+
+  <!-- 1. โหลดไลบรารีภายนอก (จำเป็นมาก ห้ามลบ) -->
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.7.9/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/zod@3.22.4/lib/index.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- 2. โหลดสคริปต์หลักของโปรเจกต์ -->
+  <script src="js/app.js"></script>
+  <script src="js/pages.js"></script>
+ </body>
+</html>
